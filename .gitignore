@@ -1,0 +1,10 @@
+# Ignore ide stuff
+.idea/
+__pycache__/
+
+output
+split
+.Rhistory
+
+.csv
+.csv.zst
