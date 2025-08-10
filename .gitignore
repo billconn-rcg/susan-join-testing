@@ -6,5 +6,5 @@ output
 split
 .Rhistory
 
-.csv
-.csv.zst
+*.csv
+*.csv.zst
