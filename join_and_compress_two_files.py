@@ -31,7 +31,7 @@ def join(compression_type, left_input_name, right_input_name, output_name):
     right_input = pd.read_csv(right_input_name, dtype={0: "int32[pyarrow]", 1: "category", 2: "category"})
     end = time.time()
     print("small/right dataset loaded into ram")
-    print(f"loadtime: {end - start}")
+    print(f"loadtime: {end - start} seconds")
     print(right_input.head())
     print(right_input.info())
     print()
@@ -41,7 +41,7 @@ def join(compression_type, left_input_name, right_input_name, output_name):
     left_input = pd.read_csv(left_input_name, dtype=left_input_dtype, low_memory=True)
     end = time.time()
     print("big dataset loaded into ram")
-    print(f"loadtime: {end - start}")
+    print(f"loadtime: {end - start} seconds")
     print(left_input.head())
     print(left_input.info())
     print()
@@ -50,7 +50,7 @@ def join(compression_type, left_input_name, right_input_name, output_name):
     result = pd.merge(left_input, right_input, on="id", how="outer")
     end = time.time()
     print("result info")
-    print(f"runtime: {end - start}")
+    print(f"runtime: {end - start} seconds")
     print(result.info())
     print()
 
@@ -59,7 +59,7 @@ def join(compression_type, left_input_name, right_input_name, output_name):
     start = time.time()
     result.to_csv(output_name, compression=complex_compression, index=False)
     end = time.time()
-    print(f"Compression and saving time: {end - start}")
+    print(f"Compression and saving time: {end - start} seconds")
 
     print("done, exiting")
 
