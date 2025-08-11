@@ -1,6 +1,7 @@
 # Ignore ide stuff
 .idea/
 __pycache__/
+.venv
 
 output
 split
