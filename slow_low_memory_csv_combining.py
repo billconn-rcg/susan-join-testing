@@ -34,21 +34,31 @@ class FileListReader(io.BufferedReader):
         for file in self.files_to_read.keys():
             self.files_to_read[file].close()
 
-    def readline(self, size=-1):
+    def readline(self, size=-1) -> str:
         if size != -1:
             raise RuntimeError("Size not supported")
-        return self._get_next_line()
+        to_ret = self._get_next_lines(1)
+        if len(to_ret) > 1:
+            raise RuntimeError("get_next_lines(1) returned more than one line")
+        if len(to_ret) == 0:
+            return ""
+        return to_ret[0]
 
-    def _get_next_line(self):
+    def readlines(self, hint=10000) -> list:
+        if hint == -1:
+            raise RuntimeError("Can't return the whole file, it's too large")
+        return self._get_next_lines(hint=hint)
+
+    def _get_next_lines(self, hint=1):
         for file in self.files_to_read.keys():
             if self.done_reading[file]:
                 pass
-            next_line = self.files_to_read[file].readline()
+            next_line = self.files_to_read[file].readlines(hint)
             if next_line:
                 return next_line
             else:
                 self.done_reading[file] = True
-        return ""
+        return []
 
 
 def get_complex_compression(compression_type):
@@ -89,10 +99,11 @@ def get_header(compression_type, file_path):
 
 @click.command()
 @click.option('-c', '--compression-type', default='zstd', help='Compression format to use')
+@click.option("-r", "--read-lines-count", default=1000000, help="amount of lines to read at a time, can impact memory")
 @click.option('-i', '--input-folder', help='folder full of .csv.zst files to combine')
 @click.option('-o', '--output-name', prompt='Name of the output file',
               help='This should be a <name>.csv.zst file.')
-def join_files(compression_type, input_folder, output_name):
+def join_files(compression_type, read_lines_count, input_folder, output_name):
     print("building list of files to combine")
     # build a list_of_files from the input folder
     list_of_files = []
@@ -120,13 +131,15 @@ def join_files(compression_type, input_folder, output_name):
         # then write all the lines
         done = False
         while not done:
-            line_to_write = file_list.readline()
-            #print(f"line to write: {line_to_write}")
+            lines_to_write = file_list.readlines(read_lines_count)
+            #lines_to_write = file_list.readline()
+            #print(f"line to write: {lines_to_write}")
             #time.sleep(1)
-            if not line_to_write:
+            if not lines_to_write:
                 done = True
                 pass
-            out_file.write(line_to_write)
+            out_file.write(''.join(lines_to_write))
+            #out_file.write(lines_to_write)
             out_file.flush()
     # Close files
     file_list.close()

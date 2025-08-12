@@ -35,6 +35,7 @@ def split(compression_type, input_name, output_folder, output_suffix):
         for line in f:
             column_id = line.split(',')[0].replace('"', '')
             keys.add(column_id)
+    keys = sorted(keys)
     end = time.time()
     print(f"unique keys extracted from {input_name}")
     print(f"runtime: {end - start} seconds")
