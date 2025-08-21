@@ -16,8 +16,8 @@ def get_complex_compression(compression_type):
     else:
         raise RuntimeError(f"Compression type {compression_type} is unsupported")
 
-
-@click.command()
+CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
+@click.command(context_settings=CONTEXT_SETTINGS)
 @click.option('-c', '--compression-type', default='zstd', help='Compression format to use')
 @click.option('-i', '--input-name', prompt='Name of the input file',
               help='This should be a <name>.csv.zst file.')

@@ -96,8 +96,8 @@ def get_header(compression_type, file_path):
     else:
         raise RuntimeError(f"Compression type {compression_type} is unsupported")
 
-
-@click.command()
+CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
+@click.command(context_settings=CONTEXT_SETTINGS)
 @click.option('-c', '--compression-type', default='zstd', help='Compression format to use')
 @click.option("-r", "--read-lines-count", default=1000000, help="amount of lines to read at a time, can impact memory")
 @click.option('-i', '--input-folder', help='folder full of .csv.zst files to combine')
@@ -132,14 +132,10 @@ def join_files(compression_type, read_lines_count, input_folder, output_name):
         done = False
         while not done:
             lines_to_write = file_list.readlines(read_lines_count)
-            #lines_to_write = file_list.readline()
-            #print(f"line to write: {lines_to_write}")
-            #time.sleep(1)
             if not lines_to_write:
                 done = True
                 pass
-            out_file.write(''.join(lines_to_write))
-            #out_file.write(lines_to_write)
+            out_file.writelines(lines_to_write)
             out_file.flush()
     # Close files
     file_list.close()

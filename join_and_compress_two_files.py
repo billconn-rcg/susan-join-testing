@@ -15,8 +15,8 @@ def get_complex_compression(compression_type):
     else:
         raise RuntimeError(f"Compression type {compression_type} is unsupported")
 
-
-@click.command()
+CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
+@click.command(context_settings=CONTEXT_SETTINGS)
 @click.option('-c', '--compression-type', default='zstd', help='Compression format to use')
 @click.option('-l', '--left-input-name', prompt='Name of the left input file',
               help='This should be a <name>.csv.zst file, it will be the left input file for the join/merge.')
@@ -47,7 +47,8 @@ def join(compression_type, left_input_name, right_input_name, output_name):
     print()
 
     start = time.time()
-    result = pd.merge(left_input, right_input, on="id", how="outer")
+    #result = pd.merge(left_input, right_input, on="id", how="outer")
+    result = pd.merge(left_input, right_input, on="id", how="left")
     end = time.time()
     print("result info")
     print(f"runtime: {end - start} seconds")
