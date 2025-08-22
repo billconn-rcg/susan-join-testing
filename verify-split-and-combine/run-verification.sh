@@ -6,8 +6,8 @@ input_file="./input.csv.zst"
 tmp_file="./tmpfile.csv.zst"
 output_file="./output.csv.zst"
 tmpdir="tmpdir/"
-split_script="../naive_split_file.py"
-join_script="../slow_low_memory_csv_combining.py"
+split_script="../split.py"
+join_script="../combine.py"
 
 # ensure tmpdir exists
 mkdir -p $tmpdir

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 python_exe="../.venv/bin/python"
-combine_script="../join_and_compress_two_files.py"
+combine_script="../join_two_files.py"
 left_input="61511_small.csv.zst"
 right_input="reshaped_phenotype_sorted_with_header_uniq.csv.zst"
 output_file="test_out.csv.zst"
