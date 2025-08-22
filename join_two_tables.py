@@ -47,6 +47,7 @@ def join(compression_type, left_input_name, right_input_name, output_name):
     print()
 
     start = time.time()
+    # Apparently, left and outer joins result in the same output with these two data tables columns
     #result = pd.merge(left_input, right_input, on="id", how="outer")
     result = pd.merge(left_input, right_input, on="id", how="left")
     end = time.time()

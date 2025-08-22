@@ -3,6 +3,7 @@
 __pycache__/
 .venv
 
+real-data
 output
 split
 .Rhistory

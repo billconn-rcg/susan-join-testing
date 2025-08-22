@@ -1,5 +1,5 @@
 from unittest import TestCase
-import slow_low_memory_csv_combining
+import combine
 import os
 
 

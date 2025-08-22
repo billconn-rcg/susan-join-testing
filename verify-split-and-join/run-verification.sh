@@ -1,8 +1,8 @@
 #!/bin/bash
 
 python_exe="../.venv/bin/python"
-#input_file="./input.csv.zst"
-input_file="./hand-build-test-file.csv.zst"
+input_file="./input.csv.zst"
+#input_file="./hand-build-test-file.csv.zst"
 tmp_file="./tmpfile.csv.zst"
 output_file="./output.csv.zst"
 tmpdir="tmpdir/"

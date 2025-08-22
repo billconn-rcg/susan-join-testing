@@ -17,3 +17,9 @@ fi
 
 # verify the output file is the same as the input file
 diff -q <(zstdcat "$output_file") <(zstdcat "$expected_output")
+ret=$?
+if [ ! $ret ]; then
+    echo "The diff failed, please check join script!"
+else
+    echo "Everything checks out"
+fi
